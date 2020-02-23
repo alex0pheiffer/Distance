@@ -1,4 +1,4 @@
-package com.example.rpg_v4.db_files;
+package com.example.distance;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,48 +11,50 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.rpg_v4.dbCheckerActivity;
-import com.example.rpg_v4.R;
-import com.example.rpg_v4.db_files.adapter_classes.cards_adapter;
+import com.example.distance.db_things.Reminder_dbObj;
+import com.example.distance.db_things.distanceViewModel;
+import com.example.distance.db_things.reminderAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class CardsTableAct extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
 
-    private RPG_ViewModel rpgViewModel;
+    private distanceViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_values_table);
+        setContentView(R.layout.activity_main);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final cards_adapter adapter = new cards_adapter(this);
+        final reminderAdapter adapter = new reminderAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        rpgViewModel = new ViewModelProvider(this).get(RPG_ViewModel.class);
+        viewModel = new ViewModelProvider(this).get(distanceViewModel.class);
 
 
-        rpgViewModel.getlUserCards().observe(this, new Observer<List<User_Cards>>() {
+        viewModel.getlReminders().observe(this, new Observer<List<Reminder_dbObj>>() {
             @Override
-            public void onChanged(@Nullable final List<User_Cards> vals) {
+            public void onChanged(@Nullable final List<Reminder_dbObj> vals) {
                 // Update the cached copy of the words in the adapter.
                 adapter.setlData(vals);
             }
         });
 
         FloatingActionButton fab = findViewById(R.id.fab);
+        /*
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CardsTableAct.this, dbCheckerActivity.class);
+                Intent intent = new Intent(MainActivity.this, dbCheckerActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
+         */
     }
 
 }
