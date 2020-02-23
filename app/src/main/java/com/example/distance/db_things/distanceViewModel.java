@@ -20,6 +20,7 @@ public class distanceViewModel extends AndroidViewModel {
         lReminders = repository.getlreminders();
     }
 
+    //wrapper methods
     public void insert(Reminder_dbObj reminder_dbObj) {repository.insert(reminder_dbObj);}
     public void deleteReminder(Reminder_dbObj reminder_dbObj) {repository.delete(reminder_dbObj);}
     public void updateLabel(Reminder_dbObj reminder_dbObj) {repository.updateLabel(reminder_dbObj);}
