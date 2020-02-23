@@ -3,6 +3,7 @@ package com.example.distance;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,10 +19,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import timber.log.Timber;
+
+public class MainActivity extends AppCompatActivity implements reminderAdapter.reminderAdapterListener {
 
 
     private distanceViewModel viewModel;
+    public static final int NEW_REMINDER_ACTIVITY_REQUEST_CODE = 1;
+    public static final int VIEW_REMIDER_ACTIVITY_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +53,32 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, dbCheckerActivity.class);
-                startActivity(intent);
-                finish();
+                Intent intent = new Intent(MainActivity.this, newItemActivity.class);
+                startActivityForResult(intent, NEW_REMINDER_ACTIVITY_REQUEST_CODE);
             }
         });
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == NEW_REMINDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+
+            Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), 0);
+            Timber.d("new reminder created: "+reminder.getLabel());
+            viewModel.insert(reminder);
+            Timber.d("reminder added successfully!");
+        }
+        else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.empty_not_valid,
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void reminderPressed(int id) {
+        Intent intent = new Intent(MainActivity.this, holderForMap.class);
+        startActivityForResult(intent, VIEW_REMIDER_ACTIVITY_REQUEST_CODE);
+    }
 }

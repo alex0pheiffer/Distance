@@ -1,6 +1,7 @@
 package com.example.distance.db_things;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,12 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.distance.R;
+import com.example.distance.reminder;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataViewHolder>{
 
@@ -26,6 +31,7 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
         private final LayoutInflater mInflater;
 
         private List<Reminder_dbObj> lData; //Cached copy of words
+        private List<reminder> lReminders;
 
         public reminderAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
@@ -40,17 +46,28 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
         @Override
         public void onBindViewHolder(dataViewHolder holder, int position) {
             if (lData != null) {
-                Reminder_dbObj current = (Reminder_dbObj)(lData.get(position));
-                holder.dataItemView.setText(current.getLabel() + " [" + current.getDistance()+"]");
+                final reminder current = (reminder)(lReminders.get(position));
+                holder.dataItemView.setText(current.getLabel() + " [" + current.getDistance()+" ft ]");
+                holder.dataItemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //if the item is pressed, open a map view to show where this location is and how far we are
+                        Timber.d(""+current.getLabel()+" is pressed.");
+                    }
+                });
             }
             else {
                 // covers the case of data not being ready yet
-                holder.dataItemView.setText("No Data");
+                holder.dataItemView.setText("Nothing to do...");
             }
         }
 
         public void setlData(List<Reminder_dbObj> vals) {
             lData = vals;
+            lReminders = new ArrayList<reminder>();
+            for (Reminder_dbObj n : vals) {
+                lReminders.add(new reminder(n.getId(), n.getLabel(), n.getLocation()));
+            }
             notifyDataSetChanged();
         }
         // getItemCount() is called many times, and when it is first called,
@@ -63,5 +80,9 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
             else {
                 return 0;
             }
+        }
+
+        public interface reminderAdapterListener {
+            void reminderPressed(int id);
         }
     }

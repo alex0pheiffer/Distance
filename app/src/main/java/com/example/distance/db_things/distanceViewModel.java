@@ -9,6 +9,8 @@ import com.example.distance.db_things.distanceRepository;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 public class distanceViewModel extends AndroidViewModel {
 
     private distanceRepository repository;
@@ -25,7 +27,8 @@ public class distanceViewModel extends AndroidViewModel {
         return lReminders;
     }
 
-    public void insert(Reminder_dbObj reminder_dbObj) {repository.insert(reminder_dbObj);}
+    public void insert(Reminder_dbObj reminder_dbObj) {repository.insert(reminder_dbObj);
+    Timber.d("reminder: "+reminder_dbObj.getLabel()+" has been added!");}
     public void deleteReminder(Reminder_dbObj reminder_dbObj) {repository.delete(reminder_dbObj);}
     public void updateLabel(Reminder_dbObj reminder_dbObj) {repository.updateLabel(reminder_dbObj);}
     public void updateLocation(Reminder_dbObj reminder_dbObj) {repository.updateLocation(reminder_dbObj);}

@@ -4,7 +4,7 @@ public class reminder {
 
     private int id;
     private String label;
-    private String location;
+    private String location; //turn into location object
     /*
     im assuming we'll want some sort of "location object"
     which we can convert our strange stored string in the db
@@ -26,5 +26,10 @@ public class reminder {
 
     public int getId() {
         return id;
+    }
+
+    public int getDistance() {
+        //find distance from us to the location
+        return 0;
     }
 }
