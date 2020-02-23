@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
             viewModel.insert(reminder);
             System.out.println("reminder added successfully!");
         }
-        if (requestCode == VIEW_REMIDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+        else if (requestCode == VIEW_REMIDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             int remove = data.getIntExtra(holderForMap.EXTRA_REPLY_REMOVE,-1);
             System.out.println("ACT CLOSED: id = "+remove);
             if (remove != -1) {

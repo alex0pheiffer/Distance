@@ -40,7 +40,7 @@ public class holderForMap extends AppCompatActivity {
         setContentView(R.layout.activity_holder_for_map);
 
         Intent mIntent = getIntent();
-        final int reminderID = mIntent.getIntExtra("reminderID", 0)-1;
+        final int reminderID = mIntent.getIntExtra("reminderID", 0);
 
         titleTextView = findViewById(R.id.reminder_map);
         locationTextView = findViewById(R.id.location_map);

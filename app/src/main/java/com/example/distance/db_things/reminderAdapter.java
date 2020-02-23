@@ -47,7 +47,7 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
         }
 
         @Override
-        public void onBindViewHolder(dataViewHolder holder, int position) {
+        public void onBindViewHolder(dataViewHolder holder, final int position) {
             if (lData != null) {
                 final reminder current = (reminder)(lReminders.get(position));
                 holder.dataItemView.setText(current.getLabel() + " [" + current.getDistance()+" ft ]");
@@ -55,8 +55,8 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
                     @Override
                     public void onClick(View v) {
                         //if the item is pressed, open a map view to show where this location is and how far we are
-                        listener.reminderPressed(current.getId());
-                        Timber.d(""+current.getLabel()+" is pressed.");
+                        listener.reminderPressed(position);
+                        System.out.println(""+current.getLabel()+" "+current.getId()+" is pressed.");
                     }
                 });
             }
