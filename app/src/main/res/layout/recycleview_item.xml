@@ -7,5 +7,5 @@
         android:id="@+id/textView"
         style="@style/db_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="50dp"/>
 </LinearLayout>

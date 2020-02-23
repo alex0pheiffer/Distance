@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 public class distanceRepository {
 
     private Reminder_dao reminderDao;
@@ -23,7 +25,9 @@ public class distanceRepository {
 
     //add a new reminder to the list (by id)
     public void insert(Reminder_dbObj reminder) {
+        Timber.d("reminder: "+reminder.getLabel()+" IS BEING added!");
         new insertAsyncTaskReminder(reminderDao).execute(reminder);
+        Timber.d("reminder: "+reminder.getLabel()+" has been added !");
     }
 
     //update a current reminder label (by id)
@@ -55,6 +59,7 @@ public class distanceRepository {
 
         @Override
         protected Void doInBackground(final Reminder_dbObj... params) {
+            Timber.d("adding to async...");
             mAsyncTaskDao.insert(params[0]);
             return null;
         }
