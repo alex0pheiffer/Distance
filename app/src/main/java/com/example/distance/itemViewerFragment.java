@@ -27,7 +27,7 @@ public class itemViewerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         myItems = new ArrayList<reminder>();
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            //mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
 
@@ -40,12 +40,9 @@ public class itemViewerFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new itemRecyclerAdapter(myItems, mListener));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            final itemsReyclcerAdapter adapter = new itemRecyclerAdapter(this);
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }
