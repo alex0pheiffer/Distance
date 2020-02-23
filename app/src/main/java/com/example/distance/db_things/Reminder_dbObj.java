@@ -1,4 +1,4 @@
-package com.example.distance;
+package com.example.distance.db_things;
 
 
 import androidx.annotation.NonNull;

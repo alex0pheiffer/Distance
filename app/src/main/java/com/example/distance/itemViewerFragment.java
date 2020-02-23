@@ -12,34 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.distance.db_things.distanceViewModel;
+
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class itemViewerFragment extends Fragment {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
-
+    private distanceViewModel viewModel;
     private ArrayList<reminder> myItems;
-
-    public itemViewerFragment() {
-    }
-
-    public static itemViewerFragment newInstance(int columnCount) {
-        itemViewerFragment fragment = new itemViewerFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myItems = new ArrayList<reminder>();
-
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }

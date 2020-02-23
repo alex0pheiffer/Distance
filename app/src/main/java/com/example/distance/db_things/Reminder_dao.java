@@ -1,4 +1,4 @@
-package com.example.distance;
+package com.example.distance.db_things;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -28,11 +28,11 @@ public interface Reminder_dao {
 
     //updating the LABEL by order id
     @Query("UPDATE Reminder_Table SET LABEL=:newLabel WHERE id =:index")
-    void updateLabel(int newLabel, int index);
+    void updateLabel(String newLabel, int index);
 
     //updating the LOCATION by order id
     @Query("UPDATE Reminder_Table SET LOCATION=:newLocation WHERE id =:index")
-    void updateLocation(int newLocation, int index);
+    void updateLocation(String newLocation, int index);
 
     //updating the DISTANCE by order id
     @Query("UPDATE Reminder_Table SET DISTANCE=:newDistance WHERE id =:index")
