@@ -19,6 +19,8 @@ import timber.log.Timber;
 
 public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataViewHolder>{
 
+    private reminderAdapterListener listener;
+
         class dataViewHolder extends RecyclerView.ViewHolder {
             private final TextView dataItemView;
 
@@ -33,8 +35,9 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
         private List<Reminder_dbObj> lData; //Cached copy of words
         private List<reminder> lReminders;
 
-        public reminderAdapter(Context context) {
+        public reminderAdapter(reminderAdapterListener listener, Context context) {
             mInflater = LayoutInflater.from(context);
+            this.listener = listener;
         }
 
         @Override
@@ -52,6 +55,7 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
                     @Override
                     public void onClick(View v) {
                         //if the item is pressed, open a map view to show where this location is and how far we are
+                        listener.reminderPressed(current.getId());
                         Timber.d(""+current.getLabel()+" is pressed.");
                     }
                 });

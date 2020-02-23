@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
         setContentView(R.layout.activity_main);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final reminderAdapter adapter = new reminderAdapter(this);
+        final reminderAdapter adapter = new reminderAdapter(this, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -61,13 +61,20 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        System.out.println("ACTGENERALCLOSED");
         if(requestCode == NEW_REMINDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
             Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), 0);
-            Timber.d("new reminder created: "+reminder.getLabel());
+            System.out.println("new reminder created: "+reminder.getLabel());
             viewModel.insert(reminder);
-            Timber.d("reminder added successfully!");
+            System.out.println("reminder added successfully!");
+        }
+        if (requestCode == VIEW_REMIDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            int remove = data.getIntExtra(holderForMap.EXTRA_REPLY_REMOVE,-1);
+            System.out.println("ACT CLOSED: id = "+remove);
+            if (remove != -1) {
+                viewModel.deleteReminder(viewModel.getlReminders().getValue().get(remove));
+            }
         }
         else {
             Toast.makeText(
@@ -78,7 +85,9 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
     }
 
     public void reminderPressed(int id) {
+        System.out.println("SENDING REMINDERID: "+id);
         Intent intent = new Intent(MainActivity.this, holderForMap.class);
+        intent.putExtra("reminderID", id);
         startActivityForResult(intent, VIEW_REMIDER_ACTIVITY_REQUEST_CODE);
     }
 }
