@@ -1,16 +1,15 @@
 <resources>
     <string name="app_name">Distance</string>
 
-    <string name="hint_label">Task...</string>
-    <string name="hint_location">Location...</string>
+    <string name="hint_word">Word...</string>
     <string name="button_save">Save</string>
     <string name="empty_not_valid">Invalid because it is empty.</string>
     <string name="loginScreen">Loading...</string>
-    <string name="submitLogin">Create</string>
+    <string name="submitLogin">Submit</string>
     <string name="loginUserHint">Username</string>
     <string name="loginPassHint">Password</string>
     <string name="loginYesUser">Enter your username.</string>
     <string name="loginNoUser">Incorrect username/password.</string>
     <string name="loginNewUserRequirements">Must include 2+ characters.</string>
-    <string name="CompleteReminder">Task Complete</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
