@@ -21,12 +21,22 @@ public class Reminder_dbObj {
     private String location;
 
     @NonNull
+    @ColumnInfo(name = "LAT")
+    private int lat;
+
+    @NonNull
+    @ColumnInfo(name = "LON")
+    private int lon;
+
+    @NonNull
     @ColumnInfo(name = "DISTANCE")
     private int distance;
 
-    public Reminder_dbObj(String label, String location, int distance) {
+    public Reminder_dbObj(String label, String location, int lat, int lon, int distance) {
         this.label = label;
         this.location = location;
+        this.lat = lat;
+        this.lon = lon;
         this.distance = distance;
     }
 
@@ -50,6 +60,23 @@ public class Reminder_dbObj {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getLat() {
+        return lat;
+    }
+
+    public int getLon() {
+        return lon;
+    }
+
+
+    public void setLat(int lat) {
+        this.lat = lat;
+    }
+
+    public void setLon(int lon) {
+        this.lon = lon;
     }
 
     public void setLabel(@NonNull String label) {

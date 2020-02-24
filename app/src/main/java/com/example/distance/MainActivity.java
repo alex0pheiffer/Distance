@@ -1,12 +1,20 @@
 package com.example.distance;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import android.Manifest;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,13 +23,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.distance.db_things.Reminder_dbObj;
 import com.example.distance.db_things.distanceViewModel;
 import com.example.distance.db_things.reminderAdapter;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.location.FusedLocationProviderClient;
 
 import java.util.List;
 
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements reminderAdapter.reminderAdapterListener {
+
+    //device location things
+    private Boolean mLocationPermissionsGranted = false;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Location myLocation;
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    private static final float DEFAULT_ZOOM = 15f;
+
+    private final double DENEVELAT = 34.070743;
+    private final double DENEVELON = -118.450159;
 
 
     private distanceViewModel viewModel;
@@ -33,8 +58,12 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //location things...
+        getLocationPermission();
+        getDeviceLocation();
+
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final reminderAdapter adapter = new reminderAdapter(this, this);
+        final reminderAdapter adapter = new reminderAdapter(this, this, DENEVELAT, DENEVELON);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -66,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
         System.out.println("ACTGENERALCLOSED");
         if(requestCode == NEW_REMINDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
-            Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), 0);
+            Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), 0, 0,0);
             System.out.println("new reminder created: "+reminder.getLabel());
             viewModel.insert(reminder);
             System.out.println("reminder added successfully!");
@@ -93,4 +122,59 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
         startActivityForResult(intent, VIEW_REMIDER_ACTIVITY_REQUEST_CODE);
 
     }
+
+    private void getDeviceLocation(){
+        Log.d("TAG", "getDeviceLocation: getting the devices current location");
+
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        try{
+            if(mLocationPermissionsGranted){
+
+                final Task location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if(task.isSuccessful()){
+                            Log.d("TAG", "onComplete: found location!");
+                            myLocation = (Location) task.getResult();
+                            //System.out.println("My Location: "+myLocation.getLatitude()+" .. "+myLocation.getLongitude());
+
+                            //moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),DEFAULT_ZOOM);
+
+                        }else{
+                            Log.d("TAG", "onComplete: current location is null");
+                            Toast.makeText(MainActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        }catch (SecurityException e){
+            Log.e("TAG", "getDeviceLocation: SecurityException: " + e.getMessage() );
+        }
+    }
+
+    private void getLocationPermission(){
+        Log.d("TAG", "getLocationPermission: getting location permissions");
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                mLocationPermissionsGranted = true;
+            }else{
+                ActivityCompat.requestPermissions(this,
+                        permissions,
+                        LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }else{
+            ActivityCompat.requestPermissions(this,
+                    permissions,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
 }

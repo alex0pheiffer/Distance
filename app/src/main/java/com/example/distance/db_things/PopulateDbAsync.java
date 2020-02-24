@@ -15,7 +15,7 @@ public class PopulateDbAsync extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(final Void... params) {
         //this.removeAll();
-        Reminder_dbObj remind = new Reminder_dbObj("Add_New", "location?", 0);
+        Reminder_dbObj remind = new Reminder_dbObj("Add_New", "location?", 0, 0, 0);
 
         return null;
     }
