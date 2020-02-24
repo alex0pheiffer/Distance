@@ -25,34 +25,41 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/reminder_map"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center"
-            android:textSize="30dp"/>
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/location_map"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_chevron_left_black_24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_chevron_left_black_24dp"
+        app:backgroundTint="#D5009688"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_remove"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_check_black_24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_check_black_24dp"
+        app:backgroundTint="#D5009688"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
