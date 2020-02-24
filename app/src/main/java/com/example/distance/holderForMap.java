@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class holderForMap extends AppCompatActivity implements OnMapReadyCallbac
     private TextView locationTextView;
     private FloatingActionButton remove_fab;
     private FloatingActionButton save_fab;
+    private static final float DEFAULT_ZOOM = 15f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +83,8 @@ public class holderForMap extends AppCompatActivity implements OnMapReadyCallbac
                     System.out.println("LAT: "+mReminder.getLat()+" LON: "+mReminder.getLon());
                     LatLng sydney = new LatLng(mReminder.getLat(), mReminder.getLon());
                     mMap.addMarker(new MarkerOptions().position(sydney).title(mReminder.getLocation()));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                    if (mReminder.getDistance() < 5000) moveCamera(sydney, DEFAULT_ZOOM, mReminder.getLocation());
+                    else mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
                 }
             }
         });
@@ -106,6 +109,19 @@ public class holderForMap extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
+
+    private void moveCamera(LatLng latLng, float zoom, String title){
+        Log.d("TAG", "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+
+        if(!title.equals("My Location")){
+            MarkerOptions options = new MarkerOptions()
+                    .position(latLng)
+                    .title(title);
+            mMap.addMarker(options);
+        }
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
