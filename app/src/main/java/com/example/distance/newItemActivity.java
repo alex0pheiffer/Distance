@@ -62,6 +62,8 @@ public class newItemActivity extends AppCompatActivity implements OnMapReadyCall
                     setResult(RESULT_CANCELED, replyIntent);
                 }
                 else {
+
+                    System.out.println("LAT: "+curLat+" LON: "+curLon);
                     String input = mEditLabel.getText().toString();
                     String location = mSearchText.getText().toString();
                     replyIntent.putExtra(EXTRA_REPLY_LABEL, input);
@@ -135,6 +137,8 @@ public class newItemActivity extends AppCompatActivity implements OnMapReadyCall
 
         curLat = latLng.latitude;
         curLon = latLng.longitude;
+
+        System.out.println("LAT: "+curLat+" LON: "+curLon);
 
         if(!title.equals("My Location")){
             MarkerOptions options = new MarkerOptions()

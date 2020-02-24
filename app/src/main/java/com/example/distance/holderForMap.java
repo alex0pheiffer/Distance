@@ -35,6 +35,9 @@ public class holderForMap extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
     private List<Reminder_dbObj> lReminders;
 
+    private final double DENEVELAT = 34.070743;
+    private final double DENEVELON = -118.450159;
+
     private Reminder_dbObj mReminder;
     private TextView titleTextView;
     private TextView locationTextView;
@@ -73,6 +76,13 @@ public class holderForMap extends AppCompatActivity implements OnMapReadyCallbac
                 mReminder = lReminders.get(reminderID);
                 titleTextView.setText(mReminder.getLabel());
                 locationTextView.setText(mReminder.getLocation());
+                // Add a marker in Sydney and move the camera
+                if (mReminder != null) {
+                    System.out.println("LAT: "+mReminder.getLat()+" LON: "+mReminder.getLon());
+                    LatLng sydney = new LatLng(mReminder.getLat(), mReminder.getLon());
+                    mMap.addMarker(new MarkerOptions().position(sydney).title(mReminder.getLocation()));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                }
             }
         });
 
@@ -101,8 +111,15 @@ public class holderForMap extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(mReminder.getLat(), mReminder.getLon());
-        mMap.addMarker(new MarkerOptions().position(sydney).title(mReminder.getLocation()));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        if (mReminder != null) {
+            LatLng sydney = new LatLng(mReminder.getLat(), mReminder.getLon());
+            mMap.addMarker(new MarkerOptions().position(sydney).title(mReminder.getLocation()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        }
+        else {
+            LatLng sydney = new LatLng(DENEVELAT, DENEVELON);
+            mMap.addMarker(new MarkerOptions().position(sydney).title("DeNeve"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        }
     }
 }
