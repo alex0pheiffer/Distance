@@ -34,10 +34,14 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
 
         private List<Reminder_dbObj> lData; //Cached copy of words
         private List<reminder> lReminders;
+        private double mylat;
+        private double mylon;
 
-        public reminderAdapter(reminderAdapterListener listener, Context context) {
+        public reminderAdapter(reminderAdapterListener listener, Context context, double mylat, double mylon) {
             mInflater = LayoutInflater.from(context);
             this.listener = listener;
+            this.mylat = mylat;
+            this.mylon = mylon;
         }
 
         @Override
