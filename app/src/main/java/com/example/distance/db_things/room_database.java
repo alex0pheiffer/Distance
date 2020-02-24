@@ -21,6 +21,8 @@ public abstract class room_database extends RoomDatabase {
 
     static room_database getDatabase(final Context context) {
 
+        INSTANCE = Room.databaseBuilder(context.getApplicationContext(), room_database.class, "rpg_database").addMigrations(MIGRATION_1_2).build();
+
         if (INSTANCE == null) {
             synchronized (room_database.class) {
                 if (INSTANCE == null) {

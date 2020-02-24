@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
         System.out.println("ACTGENERALCLOSED");
         if(requestCode == NEW_REMINDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
-            Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), 0);
+            Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), 0, 0,0);
             System.out.println("new reminder created: "+reminder.getLabel());
             viewModel.insert(reminder);
             System.out.println("reminder added successfully!");
