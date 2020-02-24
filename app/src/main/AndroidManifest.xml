@@ -35,7 +35,7 @@
         <activity android:name=".newItemActivity" />
         <activity
             android:name=".holderForMap"
-            android:label="@string/title_activity_holder_for_map"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
