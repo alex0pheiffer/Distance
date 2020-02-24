@@ -23,17 +23,18 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
 
         class dataViewHolder extends RecyclerView.ViewHolder {
             private final TextView dataItemView;
+            private final TextView dataItemDist;
 
             private dataViewHolder(View itemView) {
                 super(itemView);
                 dataItemView = itemView.findViewById(R.id.textView);
+                dataItemDist = itemView.findViewById(R.id.textDist);
             }
         }
 
         private final LayoutInflater mInflater;
 
         private List<Reminder_dbObj> lData; //Cached copy of words
-        private List<reminder> lReminders;
         private double mylat;
         private double mylon;
 
@@ -53,8 +54,10 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
         @Override
         public void onBindViewHolder(dataViewHolder holder, final int position) {
             if (lData != null) {
-                final reminder current = (reminder)(lReminders.get(position));
-                holder.dataItemView.setText(current.getLabel() + " [" + current.getDistance()+" ft ]");
+                final Reminder_dbObj current = (lData.get(position));
+                System.out.println("DISTANCE: "+current.getDistance());
+                holder.dataItemView.setText(current.getLabel());
+                holder.dataItemDist.setText("[ " + current.getDistance()+" ft ]");
                 holder.dataItemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -72,10 +75,6 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
 
         public void setlData(List<Reminder_dbObj> vals) {
             lData = vals;
-            lReminders = new ArrayList<reminder>();
-            for (Reminder_dbObj n : vals) {
-                lReminders.add(new reminder(n.getId(), n.getLabel(), n.getLocation()));
-            }
             notifyDataSetChanged();
         }
         // getItemCount() is called many times, and when it is first called,

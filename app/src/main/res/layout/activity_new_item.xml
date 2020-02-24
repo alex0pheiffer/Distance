@@ -11,20 +11,15 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <EditText
-        android:id="@+id/edit_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:fontFamily="sans-serif-light"
-        android:hint="test"
-        android:inputType="textAutoComplete"
-        android:padding="@dimen/small_padding"
-        android:layout_marginBottom="@dimen/big_padding"
-        android:layout_marginTop="@dimen/big_padding"
-        android:textSize="18sp" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/colorPrimary"
+        android:alpha=".3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -32,7 +27,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_label"
+        app:layout_constraintTop_toTopOf="parent"
         android:elevation="10dp"
         android:background="@drawable/white_border"
         android:id="@+id/relLayout1">
@@ -56,18 +51,32 @@
             android:background="@null"
             android:hint="Enter Address, City or Zip Code"
             android:imeOptions="actionSearch"/>
-
-
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/button_save"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/relLayout1"
+    <EditText
+        android:id="@+id/edit_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/genericBlue"
-        android:text="@string/button_save"
-        android:textColor="@color/genericPurple" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/relLayout1"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="Task..."
+        android:textColor="#FFFFFF"
+        android:inputType="textAutoComplete"
+        android:padding="@dimen/small_padding"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginTop="@dimen/big_padding"
+        android:textSize="18sp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_check_black_24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

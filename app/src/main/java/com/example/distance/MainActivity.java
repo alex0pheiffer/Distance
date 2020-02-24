@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.maps.android.SphericalUtil;
 
 import java.util.List;
 
@@ -97,10 +98,15 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
             double templat = data.getDoubleExtra(newItemActivity.EXTRA_REPLY_LAT,0);
             double templon = data.getDoubleExtra(newItemActivity.EXTRA_REPLY_LON,0);
             System.out.println("RECIEVED lat: "+templat+" RECIEVED lon: "+templon);
-            Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), templat, templon, getDistance(templat, templon));
+            System.out.println("DISTANCE: "+getDistance(templat, templon));
+            LatLng from = new LatLng(DENEVELAT, DENEVELON);
+            LatLng to = new LatLng(templat, templon);
+            int distance = (int)(SphericalUtil.computeDistanceBetween(to, from)*3.2808399);
+            Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), templat, templon, distance);
             System.out.println("new reminder created: "+reminder.getLabel());
             viewModel.insert(reminder);
             System.out.println("reminder added successfully!");
+            System.out.println("DISTANCE: "+reminder.getDistance());
             System.out.println("ADDED LAT: "+reminder.getLat()+" ADDED LON: "+reminder.getLon());
         }
         else if (requestCode == VIEW_REMIDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -182,16 +188,20 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
 
 
     int getDistance(double lat,double lon) {
+        System.out.println("ENTERING DISTANCE CALC");
         int R = 6371; // Radius of the earth in km
-        double dLat = deg2rad(lat-DENEVELAT);  // deg2rad below
-        double dLon = deg2rad(lon-DENEVELON);
+        double dLat = Math.abs((deg2rad(-lat+DENEVELAT)));  // deg2rad below
+        double dLon = Math.abs(deg2rad(-lon+DENEVELON));
         double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
                         Math.cos(deg2rad(DENEVELAT)) * Math.cos(deg2rad(DENEVELON)) *
                                 Math.sin(dLon/2) * Math.sin(dLon/2)
                 ;
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         double d = R * c; // Distance in km
+        System.out.println("DIST KM: "+d);
         int ft = (int)(d*3280.8399);
+        System.out.println("DIST FT: "+ft);
+
         return ft;
     }
 
