@@ -87,12 +87,10 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
     }
 
     public void reminderPressed(int id) {
-        /*System.out.println("SENDING REMINDERID: "+id);
+        System.out.println("SENDING REMINDERID: "+id);
         Intent intent = new Intent(MainActivity.this, holderForMap.class);
         intent.putExtra("reminderID", id);
         startActivityForResult(intent, VIEW_REMIDER_ACTIVITY_REQUEST_CODE);
-    */
-    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-    startActivity(intent);}
 
+    }
 }

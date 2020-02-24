@@ -12,4 +12,7 @@
     <string name="loginNoUser">Incorrect username/password.</string>
     <string name="loginNewUserRequirements">Must include 2+ characters.</string>
     <string name="title_activity_maps">Map</string>
+    <string name="CompleteReminder">Task Finished</string>
+    <string name="hint_label">Task...</string>
+    <string name="hint_location">Location...</string>
 </resources>
