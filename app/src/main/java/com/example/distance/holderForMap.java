@@ -33,9 +33,9 @@ public class holderForMap extends AppCompatActivity implements OnMapReadyCallbac
 
     private distanceViewModel viewModel;
     private GoogleMap mMap;
-    private List<reminder> lReminders;
+    private List<Reminder_dbObj> lReminders;
 
-    private reminder mReminder;
+    private Reminder_dbObj mReminder;
     private TextView titleTextView;
     private TextView locationTextView;
     private FloatingActionButton remove_fab;
@@ -60,13 +60,13 @@ public class holderForMap extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        lReminders = new ArrayList<reminder>();
+        lReminders = new ArrayList<Reminder_dbObj>();
         viewModel = new ViewModelProvider(this).get(distanceViewModel.class);
         viewModel.getlReminders().observe(this, new Observer<List<Reminder_dbObj>>() {
             @Override
             public void onChanged(@Nullable final List<Reminder_dbObj> vals) {
                 for (Reminder_dbObj n : vals) {
-                    lReminders.add(new reminder(n.getId(),n.getLabel(), n.getLocation()));
+                    lReminders.add(n);
                 }
                 //set this activity's reminder and the cooresponding views
                 System.out.println("ACT CREATED: id = "+reminderID);
@@ -101,8 +101,8 @@ public class holderForMap extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        LatLng sydney = new LatLng(mReminder.getLat(), mReminder.getLon());
+        mMap.addMarker(new MarkerOptions().position(sydney).title(mReminder.getLocation()));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
