@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#4BCC83</color>
+    <color name="colorPrimaryDark">#1B5E97</color>
     <color name="white">#FFFFFF</color>
     <color name="genericBlue">#809fd1</color>
     <color name="genericPurple">#57346b</color>
@@ -9,4 +9,6 @@
     <color name="genericElectric">#9ed6db</color>
     <color name="lighterIncorrect">#fa8e87</color>
     <color name="genericIncorrect">#eb4034</color>
+    <color name="title_color">#243D6A</color>
+    <color name="YESCOLOR">#4DCD72</color>
 </resources>

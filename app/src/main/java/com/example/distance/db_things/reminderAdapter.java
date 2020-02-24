@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,11 +25,13 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
         class dataViewHolder extends RecyclerView.ViewHolder {
             private final TextView dataItemView;
             private final TextView dataItemDist;
+            private final LinearLayout pallete_background;
 
             private dataViewHolder(View itemView) {
                 super(itemView);
                 dataItemView = itemView.findViewById(R.id.textView);
                 dataItemDist = itemView.findViewById(R.id.textDist);
+                pallete_background = itemView.findViewById(R.id.pallete_background);
             }
         }
 
@@ -58,6 +61,9 @@ public class reminderAdapter extends RecyclerView.Adapter<reminderAdapter.dataVi
                 System.out.println("DISTANCE: "+current.getDistance());
                 holder.dataItemView.setText(current.getLabel());
                 holder.dataItemDist.setText("[ " + current.getDistance()+" ft ]");
+                if (current.getDistance() < 1500) {
+                    holder.pallete_background.setBackgroundColor(holder.pallete_background.getResources().getColor(R.color.YESCOLOR));
+                }
                 holder.dataItemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
