@@ -91,5 +91,6 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
         Intent intent = new Intent(MainActivity.this, holderForMap.class);
         intent.putExtra("reminderID", id);
         startActivityForResult(intent, VIEW_REMIDER_ACTIVITY_REQUEST_CODE);
+
     }
 }
