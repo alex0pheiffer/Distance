@@ -136,7 +136,9 @@ public class newItemActivity extends AppCompatActivity implements OnMapReadyCall
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
         curLat = latLng.latitude;
+        System.out.println("CURRENT LATITUDE: "+curLat);
         curLon = latLng.longitude;
+        System.out.println("CURRENT LONG: "+curLon);
 
         System.out.println("LAT: "+curLat+" LON: "+curLon);
 

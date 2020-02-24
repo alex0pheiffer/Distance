@@ -94,13 +94,14 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("ACTGENERALCLOSED");
         if(requestCode == NEW_REMINDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            double templat = data.getIntExtra(newItemActivity.EXTRA_REPLY_LAT,0);
-            double templon = data.getIntExtra(newItemActivity.EXTRA_REPLY_LAT,0);
-
+            double templat = data.getDoubleExtra(newItemActivity.EXTRA_REPLY_LAT,0);
+            double templon = data.getDoubleExtra(newItemActivity.EXTRA_REPLY_LON,0);
+            System.out.println("RECIEVED lat: "+templat+" RECIEVED lon: "+templon);
             Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), templat, templon, getDistance(templat, templon));
             System.out.println("new reminder created: "+reminder.getLabel());
             viewModel.insert(reminder);
             System.out.println("reminder added successfully!");
+            System.out.println("ADDED LAT: "+reminder.getLat()+" ADDED LON: "+reminder.getLon());
         }
         else if (requestCode == VIEW_REMIDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             int remove = data.getIntExtra(holderForMap.EXTRA_REPLY_REMOVE,-1);
