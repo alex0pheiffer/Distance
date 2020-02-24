@@ -94,8 +94,10 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("ACTGENERALCLOSED");
         if(requestCode == NEW_REMINDER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            double templat = data.getIntExtra(newItemActivity.EXTRA_REPLY_LAT,0);
+            double templon = data.getIntExtra(newItemActivity.EXTRA_REPLY_LAT,0);
 
-            Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), 0, 0,0);
+            Reminder_dbObj reminder = new Reminder_dbObj(data.getStringExtra(newItemActivity.EXTRA_REPLY_LABEL),data.getStringExtra(newItemActivity.EXTRA_REPLY_LOCATION), templat, templon, getDistance(templat, templon));
             System.out.println("new reminder created: "+reminder.getLabel());
             viewModel.insert(reminder);
             System.out.println("reminder added successfully!");
@@ -175,6 +177,25 @@ public class MainActivity extends AppCompatActivity implements reminderAdapter.r
                     permissions,
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
+    }
+
+
+    int getDistance(double lat,double lon) {
+        int R = 6371; // Radius of the earth in km
+        double dLat = deg2rad(lat-DENEVELAT);  // deg2rad below
+        double dLon = deg2rad(lon-DENEVELON);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                        Math.cos(deg2rad(DENEVELAT)) * Math.cos(deg2rad(DENEVELON)) *
+                                Math.sin(dLon/2) * Math.sin(dLon/2)
+                ;
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double d = R * c; // Distance in km
+        int ft = (int)(d*3280.8399);
+        return ft;
+    }
+
+    double deg2rad(double deg) {
+        return deg * (Math.PI/180);
     }
 
 }

@@ -33,10 +33,13 @@ public class newItemActivity extends AppCompatActivity implements OnMapReadyCall
     private GoogleMap mMap;
     public static final String EXTRA_REPLY_LABEL = "REPLY_LABEL";
     public static final String EXTRA_REPLY_LOCATION = "REPLY_LOCATION";
+    public static final String EXTRA_REPLY_LAT = "REPLY_LAT";
+    public static final String EXTRA_REPLY_LON = "REPLY_LON";
     private static final float DEFAULT_ZOOM = 15f;
     private EditText mEditLabel;
-    private EditText mEditLocation;
     private EditText mSearchText;
+    private double curLat = 0;
+    private double curLon = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,6 @@ public class newItemActivity extends AppCompatActivity implements OnMapReadyCall
         setContentView(R.layout.activity_new_item);
 
         mEditLabel = findViewById(R.id.edit_label);
-        mEditLocation = findViewById(R.id.edit_location);
         mSearchText = findViewById(R.id.input_search);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -56,14 +58,16 @@ public class newItemActivity extends AppCompatActivity implements OnMapReadyCall
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(mEditLabel.getText())) {
+                if (TextUtils.isEmpty(mEditLabel.getText()) || (curLat == 0 && curLon == 0)) {
                     setResult(RESULT_CANCELED, replyIntent);
                 }
                 else {
                     String input = mEditLabel.getText().toString();
-                    String location = mEditLocation.getText().toString();
+                    String location = mSearchText.getText().toString();
                     replyIntent.putExtra(EXTRA_REPLY_LABEL, input);
                     replyIntent.putExtra(EXTRA_REPLY_LOCATION, location);
+                    replyIntent.putExtra(EXTRA_REPLY_LAT, curLat);
+                    replyIntent.putExtra(EXTRA_REPLY_LON, curLon);
                     setResult(RESULT_OK, replyIntent);
                 }
                 finish();
@@ -128,6 +132,9 @@ public class newItemActivity extends AppCompatActivity implements OnMapReadyCall
     private void moveCamera(LatLng latLng, float zoom, String title){
         Log.d("TAG", "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+
+        curLat = latLng.latitude;
+        curLon = latLng.longitude;
 
         if(!title.equals("My Location")){
             MarkerOptions options = new MarkerOptions()

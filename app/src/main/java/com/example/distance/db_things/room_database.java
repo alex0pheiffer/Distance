@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.distance.db_things.Reminder_dao;
 import com.example.distance.db_things.Reminder_dbObj;
 
-@Database(entities = Reminder_dbObj.class, version = 2)
+@Database(entities = Reminder_dbObj.class, version = 3)
 public abstract class room_database extends RoomDatabase {
     public abstract Reminder_dao reminderDao();
 
@@ -21,7 +21,7 @@ public abstract class room_database extends RoomDatabase {
 
     static room_database getDatabase(final Context context) {
 
-        INSTANCE = Room.databaseBuilder(context.getApplicationContext(), room_database.class, "rpg_database").addMigrations(MIGRATION_1_2).build();
+        INSTANCE = Room.databaseBuilder(context.getApplicationContext(), room_database.class, "rpg_database").addMigrations(MIGRATION_2_3).build();
 
         if (INSTANCE == null) {
             synchronized (room_database.class) {
@@ -36,7 +36,7 @@ public abstract class room_database extends RoomDatabase {
         return INSTANCE;
     }
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
 
@@ -55,8 +55,8 @@ public abstract class room_database extends RoomDatabase {
                     "(`id` INTEGER NOT NULL PRIMARY KEY, " +
                     "`LABEL` TEXT NOT NULL, " +
                     "`LOCATION` TEXT NOT NULL, " +
-                    "`LAT` INTEGER NOT NULL, " +
-                    "`LON` INTEGER NOT NULL, " +
+                    "`LAT` DOUBLE NOT NULL, " +
+                    "`LON` DOUBLE NOT NULL, " +
                     "`DISTANCE` INTEGER NOT NULL " +" )"
             );
             //copy the data

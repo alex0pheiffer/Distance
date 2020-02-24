@@ -22,17 +22,17 @@ public class Reminder_dbObj {
 
     @NonNull
     @ColumnInfo(name = "LAT")
-    private int lat;
+    private double lat;
 
     @NonNull
     @ColumnInfo(name = "LON")
-    private int lon;
+    private double lon;
 
     @NonNull
     @ColumnInfo(name = "DISTANCE")
     private int distance;
 
-    public Reminder_dbObj(String label, String location, int lat, int lon, int distance) {
+    public Reminder_dbObj(String label, String location, double lat, double lon, int distance) {
         this.label = label;
         this.location = location;
         this.lat = lat;
@@ -62,20 +62,20 @@ public class Reminder_dbObj {
         this.id = id;
     }
 
-    public int getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public int getLon() {
+    public double getLon() {
         return lon;
     }
 
 
-    public void setLat(int lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public void setLon(int lon) {
+    public void setLon(double lon) {
         this.lon = lon;
     }
 
