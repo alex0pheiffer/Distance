@@ -119,6 +119,7 @@ public class newItemActivity extends AppCompatActivity implements OnMapReadyCall
             list = geocoder.getFromLocationName(searchString, 1);
         }catch (IOException e){
             Log.e("TAG", "geoLocate: IOException: " + e.getMessage() );
+            e.printStackTrace();
         }
 
         if(list.size() > 0){
